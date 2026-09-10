@@ -1,0 +1,24 @@
+# 统一行尾策略，避免 Windows/Linux 之间来回产生"整文件都改了"的噪声 diff。
+#
+# 背景：Git for Windows 的系统级配置默认 core.autocrlf=true，
+# 于是文本文件检出时变 CRLF、提交时又变回 LF，跟不同机器协作时容易混乱。
+# 这里显式声明规则，让行为与平台无关、可预测。
+
+# 默认按内容自动判定文本/二进制，仓库内统一存 LF
+* text=auto
+
+# 明确标出二进制，禁止任何转换（否则 PNG 会被改坏）
+*.png  binary
+*.jpg  binary
+*.gif  binary
+*.jar  binary
+*.zip  binary
+*.dll  binary
+*.exe  binary
+
+# 关卡与资源用的是 UTF-8 文本，交给 git 做自动判定即可
+*.java text
+*.md   text
+*.ps1  text
+*.tmx  text
+*.ascii text

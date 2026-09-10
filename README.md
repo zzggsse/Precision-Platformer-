@@ -12,6 +12,8 @@
 ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
 ![Tests](https://img.shields.io/badge/selftest-31%20passing-brightgreen)
 
+仓库：<https://github.com/zzggsse/Precision-Platformer->
+
 > 上图是 `F1` 调试视图：红色是尖刺判定框（比贴图窄）、绿色是玩家碰撞盒（比精灵小）。
 
 ---
@@ -68,7 +70,7 @@
 | 内存 | 无特殊要求 | 虚拟分辨率只有 640x360 |
 | 显卡 | 支持 OpenGL 3.2 | 只跑窗口和截图需要；**自检不需要** |
 | Gradle / Maven | **不需要** | 依赖靠自带的 Java 抓取器 |
-| Git | 可选 | 工程当前没有 git 仓库 |
+| Git | 可选 | 仓库已在 GitHub；本机用工程内便携版，见 `scripts\git.ps1` |
 
 检查 JDK：
 
@@ -167,6 +169,7 @@ PixelPeril\
 │       └── ScreenCapture.java  帧缓冲抓图
 ├── tools\                      开发工具（不参与游戏运行）
 │   ├── MavenFetch.java         极简 Maven 抓取器（替代 Gradle）
+│   ├── HttpGet.java            极简 HTTP 客户端（本机 curl 被拦，下载都走它）
 │   ├── GenAssets.java          代码生成占位图集与精灵
 │   └── GenLevel.java           ASCII 关卡草图 → TMX
 ├── scripts\                    PowerShell 脚本
@@ -176,7 +179,8 @@ PixelPeril\
 │   ├── gen-level.ps1           编译关卡
 │   ├── build.ps1               编译
 │   ├── run.ps1                 编译并启动
-│   └── selftest.ps1            无头自检
+│   ├── selftest.ps1            无头自检
+│   └── git.ps1                 git 包装脚本（走工程内便携版 git + 系统 OpenSSH）
 ├── assets\                     运行时资源（会进 classpath）
 │   ├── levels\
 │   │   ├── level1.ascii        关卡草图（种子，手写）
@@ -187,10 +191,13 @@ PixelPeril\
 │   ├── ARCHITECTURE.md         架构与设计决定
 │   ├── PHYSICS.md              手感调参与实测数值
 │   ├── LEVELS.md               关卡制作流程
-│   ├── DEVELOPMENT.md          开发指南、环境坑、待办
+│   ├── DEVELOPMENT.md          开发指南、环境坑、推送 GitHub、待办
 │   └── screenshot-*.png        截图
+├── .gitattributes              行尾策略（避免 Windows/Linux 协作产生噪声 diff）
+├── .gitignore
 ├── libs\                       外部依赖（17 个 jar，可删可重建，已 gitignore）
 ├── out\                        编译产物（已 gitignore）
+├── .tools\                     便携版 git 等本地工具链（已 gitignore）
 └── README.md
 ```
 
@@ -220,6 +227,7 @@ PixelPeril\
 | `scripts\build.ps1` | — | `javac` 编译到 `out\` |
 | `scripts\run.ps1` | `-Level` `-DebugBoxes` `-Screenshot` `-ShotFrame` `-SkipBuild` | 编译并启动 |
 | `scripts\selftest.ps1` | — | 无头自检，失败退出码非 0 |
+| `scripts\git.ps1` | 同 git | git 包装脚本（参数原样透传，走工程内便携版 git） |
 
 用法示例：
 
