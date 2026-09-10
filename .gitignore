@@ -1,0 +1,17 @@
+# Build output
+out/
+
+# Downloaded dependencies (regenerate with scripts/fetch-deps.ps1)
+libs/
+
+# Local toolchain (portable MinGit, used when no system git is installed)
+.tools/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+Thumbs.db
+desktop.ini
